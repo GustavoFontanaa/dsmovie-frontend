@@ -31,7 +31,6 @@ A aplicação basicamente consiste em uma lista de filmes e series que podem ser
 ### Front end
 - HTML / CSS / JS / TypeScript
 - ReactJS
-- React Native
 ### Implantação em produção
 - Back end: Heroku
 - Front end web: Netlify

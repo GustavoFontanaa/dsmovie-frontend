@@ -52,9 +52,9 @@ function Listing() {
           onChange={(ev) => setSearch(ev.target.value)}
           placeholder="Pesquisar..."
         />
-        <a className="botao-search">
+        <p className="botao-search">
           <FaSearch/>
-        </a>
+        </p>
       </section>
 
       <Pagination page={page} onChange={handlePageChange} />

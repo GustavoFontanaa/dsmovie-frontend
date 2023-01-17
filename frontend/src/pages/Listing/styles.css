@@ -1,0 +1,50 @@
+.caixa-search {
+  position: absolute;
+  top: 11%;
+  left: 24%;
+  transform: translate(-50%, -50%);
+  background-color: #333;
+  height: 50px;
+  border-radius: 40px;
+  padding: 10px;
+}
+
+.caixa-search:hover > .caixa-texto {
+  width: 240px;
+  padding: 0 6px;
+}
+
+.caixa-search:hover > .botao-search {
+  background-color: #fff;
+  margin-left: 3px;
+}
+
+.botao-search {
+  position: relative;
+  bottom: 5px;
+  color: var(--color-primary);
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.caixa-texto {
+  border: none;
+  background-color: #333;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: #fff;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 30px;
+  width: 0px;
+  cursor: pointer;
+}

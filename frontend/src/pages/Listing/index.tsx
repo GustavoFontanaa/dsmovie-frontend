@@ -4,56 +4,72 @@ import MovieCard from "components/MovieCard";
 import Pagination from "components/Pagination";
 import { BASE_URL } from "utils/requests";
 import { MoviePage } from "types/movie";
+import { FaSearch } from "react-icons/fa";
+import './styles.css';
 
 function Listing() {
+  const [pageNumber, setPageNumber] = useState(0);
 
-    const [pageNumber, setPageNumber] = useState(0);
+  const [page, setPage] = useState<MoviePage>({
+    content: [],
+    last: true,
+    totalPages: 0,
+    totalElements: 0,
+    size: 1000,
+    number: 0,
+    first: true,
+    numberOfElements: 0,
+    empty: true,
+  });
 
-    const [page, setPage] = useState<MoviePage>({
-        content: [],
-        last: true,
-        totalPages: 0,
-        totalElements: 0,
-        size: 12,
-        number: 0,
-        first: true,
-        numberOfElements: 0,
-        empty: true
-    });
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/movies?size=20&page=${pageNumber}`)
+      .then((response) => {
+        const data = response.data as MoviePage;
+        setPage(data);
+      });
+  }, [pageNumber]);
 
-    useEffect(() => {
-        axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber}`)
-        .then(response => {
-            const data = response.data as MoviePage;
-            setPage(data);
-        });
+  const handlePageChange = (newPageNumber: number) => {
+    setPageNumber(newPageNumber);
+  };
 
-    }, [pageNumber]);
+  const [search, setSearch] = useState("");
 
-    const handlePageChange = (newPageNumber : number) => {
-        setPageNumber(newPageNumber);
-    }
+  const searchLowerCase = search.toLowerCase();
+  const searchMovies = page.content.filter((movie) =>
+    movie.title.toLowerCase().includes(searchLowerCase)
+  );
 
-    return (
-        <>
-            <Pagination page={page} onChange={handlePageChange}/>
+  return (
+    <>
+      <section className="caixa-search">
+        <input
+          className="caixa-texto"
+          type="search"
+          value={search}
+          onChange={(ev) => setSearch(ev.target.value)}
+          placeholder="Pesquisar..."
+        />
+        <a className="botao-search">
+          <FaSearch/>
+        </a>
+      </section>
 
-            <div className="container">
-                <div className="row">
-                    {page.content.map(movie => (
-                        <div key={movie.id} className="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                            <MovieCard movie={movie} />
-                        </div>
-                    )
-                    )}
+      <Pagination page={page} onChange={handlePageChange} />
 
-
-
-
-                </div>
+      <div className="container">
+        <div className="row">
+          {searchMovies.map((movie) => (
+            <div key={movie.id} className="col-sm-6 col-lg-4 col-xl-3 mb-3">
+              <MovieCard movie={movie} />
             </div>
-        </>
-    );
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Listing;
